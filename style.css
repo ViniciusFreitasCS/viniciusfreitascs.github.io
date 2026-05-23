@@ -1,0 +1,593 @@
+/*
+  style.css — Estilo visual do portfólio
+  ======================================================
+  Este arquivo controla TODA a aparência da página:
+  cores, fontes, espaçamentos, layout e responsividade.
+
+  Organização do arquivo:
+  1. Variáveis globais (CSS Custom Properties)
+  2. Reset e base
+  3. Tipografia
+  4. Layout geral
+  5. Componentes (nav, hero, projetos, artigos, sobre, contato, footer)
+  6. Responsividade (media queries)
+*/
+
+
+/* =============================================
+   1. VARIÁVEIS GLOBAIS (CSS Custom Properties)
+   =============================================
+   Variáveis CSS permitem definir valores uma vez e reutilizar em todo o arquivo.
+   Se você quiser mudar a cor principal, altera APENAS aqui — não em 50 lugares.
+   Sintaxe: --nome-da-variavel: valor;
+   Uso:     color: var(--nome-da-variavel);
+*/
+
+:root {
+  /* :root representa o elemento <html> — as variáveis definidas aqui
+     são acessíveis em qualquer parte do CSS. */
+
+  /* Cores */
+  --color-text-primary:     #0f0f0f;  /* Texto principal (quase preto) */
+  --color-text-secondary:   #6b6b6b;  /* Texto secundário (cinza médio) */
+  --color-bg:               #ffffff;  /* Fundo da página */
+  --color-bg-secondary:     #f5f5f3;  /* Fundo de superfícies (cards, tags) */
+  --color-border:           rgba(0, 0, 0, 0.1);  /* Bordas finas */
+  --color-border-hover:     rgba(0, 0, 0, 0.25); /* Bordas ao passar o mouse */
+  --color-accent:           #0f0f0f;  /* Cor de destaque (botão primário) */
+
+  /* Tipografia */
+  --font-mono:  'IBM Plex Mono', monospace;   /* Para títulos e código */
+  --font-sans:  'IBM Plex Sans', sans-serif;  /* Para textos corridos */
+  --font-size-base: 14px;
+  --line-height: 1.7;
+
+  /* Espaçamento — escala consistente */
+  --space-xs:   8px;
+  --space-sm:   16px;
+  --space-md:   32px;
+  --space-lg:   52px;
+  --space-xl:   80px;
+
+  /* Layout */
+  --max-width:  720px;   /* Largura máxima do conteúdo */
+  --radius-sm:  6px;
+  --radius-md:  10px;
+
+  /* Transições */
+  --transition: 0.15s ease;
+}
+
+
+/* =============================================
+   2. RESET E BASE
+   =============================================
+   Navegadores aplicam estilos padrão diferentes entre si
+   (margens, paddings, tamanhos de fonte).
+   O "reset" remove essas inconsistências para começarmos do zero.
+*/
+
+*, *::before, *::after {
+  /* O seletor * aplica a TODOS os elementos.
+     ::before e ::after são pseudo-elementos gerados via CSS. */
+  box-sizing: border-box;
+  /* box-sizing: border-box faz com que padding e borda sejam incluídos
+     na largura/altura do elemento — o comportamento mais previsível. */
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Ativa rolagem suave ao clicar em links âncora (href="#secao"). */
+  font-size: var(--font-size-base);
+}
+
+body {
+  font-family: var(--font-mono);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg);
+  line-height: var(--line-height);
+  -webkit-font-smoothing: antialiased;
+  /* antialiased: suaviza a renderização das fontes em telas de alta densidade (Mac/iOS). */
+}
+
+img {
+  max-width: 100%;
+  /* Garante que imagens nunca ultrapassem a largura do container pai. */
+  display: block;
+}
+
+a {
+  color: inherit;
+  /* Links herdam a cor do texto pai em vez de usar o azul padrão do navegador. */
+  text-decoration: none;
+}
+
+ul, ol {
+  list-style: none;
+  /* Remove marcadores (bolinhas/números) das listas.
+     Você adiciona marcadores personalizados via CSS quando necessário. */
+}
+
+
+/* =============================================
+   3. TIPOGRAFIA
+   =============================================
+   Classes reutilizáveis para hierarquia de texto.
+*/
+
+h1, h2, h3, h4 {
+  font-weight: 500;
+  /* 500 = medium weight — mais leve que bold (700), mais marcante que regular (400). */
+  letter-spacing: -0.03em;
+  /* Tracking negativo aproxima as letras, dando um visual mais editorial. */
+}
+
+
+/* =============================================
+   4. LAYOUT GERAL
+   ============================================= */
+
+.site-header,
+main,
+.site-footer {
+  max-width: var(--max-width);
+  /* Limita a largura do conteúdo para boa legibilidade (não muito largo). */
+  margin-inline: auto;
+  /* margin-inline: auto centraliza horizontalmente o elemento.
+     Equivale a: margin-left: auto; margin-right: auto; */
+  padding-inline: var(--space-md);
+  /* Espaçamento lateral (esquerda e direita) — evita que o conteúdo
+     encoste nas bordas da tela em dispositivos menores. */
+}
+
+
+/* =============================================
+   5. COMPONENTES
+   ============================================= */
+
+
+/* --- NAVEGAÇÃO --- */
+
+.site-header {
+  position: sticky;
+  /* sticky: o cabeçalho gruda no topo da janela ao rolar a página,
+     mas ocupa espaço normal no fluxo do documento (diferente de fixed). */
+  top: 0;
+  background-color: var(--color-bg);
+  z-index: 100;
+  /* z-index controla a ordem de empilhamento — elementos com z-index maior
+     ficam na frente de elementos com z-index menor. */
+}
+
+.nav {
+  display: flex;
+  /* Flexbox: layout unidimensional. Coloca os itens filhos em linha
+     por padrão (nav-logo e nav-links lado a lado). */
+  align-items: center;         /* Alinha verticalmente ao centro */
+  justify-content: space-between; /* Distribui espaço entre logo e links */
+  padding-block: var(--space-sm);
+  /* padding-block: padding superior e inferior. */
+  border-bottom: 0.5px solid var(--color-border);
+}
+
+.nav-logo {
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: -0.3px;
+}
+
+.nav-logo span {
+  /* Estiliza apenas o <span> dentro do .nav-logo */
+  color: var(--color-text-secondary);
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--space-md);
+  /* gap: espaço entre os itens filhos num container flex ou grid. */
+}
+
+.nav-links a {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  transition: color var(--transition);
+  /* transition: suaviza a mudança de cor ao passar o mouse. */
+}
+
+.nav-links a:hover {
+  /* :hover é ativado quando o mouse passa sobre o elemento. */
+  color: var(--color-text-primary);
+}
+
+
+/* --- SEÇÕES GENÉRICAS --- */
+
+.section {
+  padding-block: var(--space-lg);
+  border-top: 0.5px solid var(--color-border);
+}
+
+.section-label {
+  font-size: 11px;
+  text-transform: uppercase; /* MAIÚSCULAS via CSS — sem alterar o HTML */
+  letter-spacing: 0.1em;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+
+/* --- HERO --- */
+
+.hero {
+  padding-block: var(--space-xl);
+}
+
+.hero-tag {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-sm);
+}
+
+.hero-name {
+  font-size: clamp(28px, 5vw, 40px);
+  /* clamp(min, preferido, max): tamanho responsivo.
+     Em telas grandes: até 40px. Em telas pequenas: no mínimo 28px.
+     5vw = 5% da largura da janela. */
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  margin-bottom: var(--space-sm);
+}
+
+.hero-desc {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  max-width: 480px;
+  margin-bottom: var(--space-md);
+}
+
+.hero-ctas {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  /* flex-wrap: wrap permite que os itens quebrem para a próxima linha
+     se não houver espaço horizontal suficiente. */
+}
+
+.btn {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  border: 0.5px solid var(--color-border-hover);
+  background: transparent;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.btn:hover {
+  background: var(--color-bg-secondary);
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border-color: var(--color-accent);
+}
+
+.btn-primary:hover {
+  background: #333;
+  border-color: #333;
+}
+
+
+/* --- PROJETOS --- */
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* grid-template-columns: define as colunas do grid.
+     1fr 1fr = duas colunas de tamanho igual (fr = fração do espaço disponível). */
+  gap: var(--space-sm);
+}
+
+.project-card {
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-sm);
+  background: var(--color-bg);
+  transition: border-color var(--transition);
+  display: flex;
+  flex-direction: column;
+  /* flex-direction: column empilha os filhos verticalmente. */
+  gap: var(--space-xs);
+}
+
+.project-card:hover {
+  border-color: var(--color-border-hover);
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.project-name {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.project-lang {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  background: var(--color-bg-secondary);
+  padding: 2px 8px;
+  border-radius: 20px;
+  border: 0.5px solid var(--color-border);
+}
+
+.project-desc {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  flex: 1;
+  /* flex: 1 faz este elemento crescer para ocupar o espaço restante disponível
+     (empurra o .project-meta para baixo do card). */
+}
+
+.project-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project-stat {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
+
+.project-link {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  transition: color var(--transition);
+}
+
+.project-link:hover {
+  color: var(--color-text-primary);
+}
+
+.project-card--more {
+  /* Variante do card para o botão "ver todos" */
+  border-style: dashed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  min-height: 100px;
+  transition: color var(--transition), border-color var(--transition);
+  text-decoration: none;
+}
+
+.project-card--more:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-border-hover);
+}
+
+
+/* --- ARTIGOS --- */
+
+.articles-list {
+  /* A lista <ol> herda os estilos de reset (sem marcadores). */
+}
+
+.article-row {
+  display: flex;
+  align-items: baseline;
+  /* baseline: alinha os itens pela linha de base do texto — fica mais elegante
+     quando os textos têm tamanhos diferentes. */
+  justify-content: space-between;
+  padding-block: var(--space-sm);
+  border-bottom: 0.5px solid var(--color-border);
+}
+
+.article-row:first-child {
+  border-top: 0.5px solid var(--color-border);
+}
+
+.article-title {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--color-text-primary);
+  transition: color var(--transition);
+}
+
+.article-row:hover .article-title {
+  /* Quando o mouse está sobre .article-row, muda a cor de .article-title dentro dele. */
+  color: var(--color-text-secondary);
+}
+
+.article-date {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  /* white-space: nowrap impede que a data quebre em duas linhas. */
+  margin-left: var(--space-md);
+}
+
+
+/* --- SOBRE --- */
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  /* Coluna esquerda fixa em 160px (foto + skills), coluna direita ocupa o resto. */
+  gap: var(--space-md) var(--space-lg);
+  /* gap: linha coluna — espaço entre linhas e entre colunas do grid. */
+  align-items: start;
+  /* align-items: start alinha as colunas ao topo (não estica até a mesma altura). */
+}
+
+.about-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  /* border-radius: 50% transforma um quadrado em círculo. */
+  background: var(--color-bg-secondary);
+  border: 0.5px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: var(--space-sm);
+}
+
+.about-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.skill-tag {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 0.5px solid var(--color-border);
+  color: var(--color-text-secondary);
+  background: var(--color-bg-secondary);
+}
+
+.about-content {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.about-content strong {
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+
+/* --- CONTATO --- */
+
+.contact-intro {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+.contact-links {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.contact-links a {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color var(--transition);
+}
+
+.contact-links a:hover {
+  color: var(--color-text-primary);
+}
+
+
+/* --- FOOTER --- */
+
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: var(--space-md);
+  border-top: 0.5px solid var(--color-border);
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.footer-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #3B6D11;  /* Verde escuro — indica "online" / disponível */
+  animation: pulse 2s infinite;
+  /* animation: aplica uma animação CSS definida em @keyframes abaixo. */
+}
+
+@keyframes pulse {
+  /*
+    @keyframes define uma animação reutilizável.
+    "pulse" é o nome; os percentuais descrevem o estado em cada momento da animação.
+    0% = início, 100% = fim (e depois repete por causa de "infinite").
+  */
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+
+/* =============================================
+   6. RESPONSIVIDADE (MEDIA QUERIES)
+   =============================================
+   Media queries aplicam estilos condicionalmente, dependendo
+   das características da tela (largura, altura, orientação).
+   Estratégia "mobile-first": escrevemos para telas pequenas primeiro,
+   e os media queries ajustam para telas maiores.
+   Aqui usamos a abordagem inversa (desktop-first) por simplicidade.
+*/
+
+@media (max-width: 600px) {
+  /*
+    Estes estilos se aplicam apenas quando a largura da janela
+    for 600px ou menos (celulares).
+  */
+
+  .nav-links {
+    gap: var(--space-sm);
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+    /* Em telas pequenas, os cards de projeto viram uma coluna única. */
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    /* Sidebar e conteúdo ficam empilhados verticalmente em celulares. */
+  }
+
+  .hero-name {
+    font-size: 26px;
+  }
+
+  .site-footer {
+    flex-direction: column;
+    gap: var(--space-xs);
+    text-align: center;
+  }
+}

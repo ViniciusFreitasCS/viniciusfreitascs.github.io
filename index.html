@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<!--
+  DOCTYPE: Instrui o navegador a interpretar este arquivo como HTML5 (a versão moderna do HTML).
+  Sem isso, alguns navegadores entrariam em "modo de compatibilidade" e renderizariam
+  a página de forma diferente do esperado.
+-->
+
+<html lang="pt-BR">
+<!--
+  <html>: Elemento raiz que envolve todo o conteúdo da página.
+  lang="pt-BR": Informa ao navegador (e a leitores de tela) que o idioma principal
+  é Português do Brasil. Isso melhora acessibilidade e SEO.
+-->
+
+<head>
+  <!--
+    <head>: Contém metadados — informações SOBRE a página, não exibidas diretamente
+    na tela. É aqui que você configura título, fontes, estilos e como a página
+    aparece em buscadores e redes sociais.
+  -->
+
+  <!-- =============================================
+    CODIFICAÇÃO E VIEWPORT
+    ============================================= -->
+
+  <meta charset="UTF-8">
+  <!--
+    Define a codificação de caracteres como UTF-8, que suporta acentos, cedilhas
+    e praticamente todos os caracteres do mundo. Sem isso, "ação" poderia virar "Ã§Ã£o".
+  -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--
+    Faz o site ser responsivo (funcionar bem em celulares e tablets).
+    width=device-width: a largura da página se ajusta à largura da tela do dispositivo.
+    initial-scale=1.0: sem zoom inicial.
+  -->
+
+  <!-- =============================================
+    TÍTULO E DESCRIÇÃO (SEO)
+    ============================================= -->
+
+  <title>Vinicius Freitas Portfólio</title>
+  <!--
+    O texto que aparece na aba do navegador e nos resultados do Google.
+    Mantenha entre 50–60 caracteres para não ser cortado nas buscas.
+  -->
+
+  <meta name="description" content="Sejá bem-vindo ao Portfólio de Vinicius Freitas! Aqui você encontrará uma coleção de projetos de código, artigos e publicações relacionados a ciência, tecnologia e filosofia. Meu objetivo é compartilhar conhecimento, conectar ideias e inspirar outros entusiastas da tecnologia. Explore meus projetos, leia meus artigos e sinta-se à vontade para entrar em contato.">
+  <!--
+    A descrição que aparece logo abaixo do título nos resultados do Google.
+    Ideal entre 150–160 caracteres. Escreva de forma clara e atrativa.
+  -->
+
+  <meta name="author" content="Vinicius">
+  <!-- Nome do autor do site. -->
+
+  <!-- =============================================
+    OPEN GRAPH — como o link aparece ao compartilhar
+    no LinkedIn, WhatsApp, Twitter, etc.
+    ============================================= -->
+
+  <meta property="og:title" content="Vinicius">
+  <meta property="og:description" content="Portfólio com projetos de código, artigos e mais.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://github.com/ViniciusFreitasCS">
+  <!--
+    Substitua "seuusuario" pelo seu nome de usuário real no GitHub.
+    Estas tags controlam o "card" exibido quando alguém cola o link do seu site
+    em uma mensagem ou post. Sem elas, o WhatsApp/LinkedIn escolhe qualquer texto
+    aleatório da página.
+  -->
+
+  <!-- =============================================
+    FAVICON — o ícone na aba do navegador
+    ============================================= -->
+
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <!--
+    O pequeno ícone que aparece na aba do navegador e nos favoritos.
+    Crie o arquivo favicon.png (recomendado: 32x32px ou 64x64px)
+    e coloque dentro da pasta assets/.
+    Dica: sites como favicon.io geram favicons facilmente.
+  -->
+
+  <!-- =============================================
+    FONTES — carregadas do Google Fonts
+    ============================================= -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <!--
+    Carrega fontes externas do Google Fonts.
+    - IBM Plex Mono: fonte monoespaçada (usada em código e títulos técnicos)
+    - IBM Plex Sans: fonte para textos corridos e descrições
+    - preconnect: pré-autoriza a conexão com os servidores do Google antes de baixar
+      a fonte, tornando o carregamento mais rápido.
+    - display=swap: enquanto a fonte carrega, o navegador usa uma fonte padrão do
+      sistema (evita texto invisível durante o carregamento).
+  -->
+
+  <!-- =============================================
+    CSS EXTERNO — estilo visual da página
+    ============================================= -->
+
+  <link rel="stylesheet" href="style.css">
+  <!--
+    Linka o arquivo CSS que controla cores, fontes, espaçamentos e layout.
+    Separar CSS do HTML é boa prática: o HTML cuida da estrutura/conteúdo,
+    o CSS cuida da aparência.
+  -->
+
+</head>
+
+<body>
+  <!--
+    <body>: Tudo que aparece visualmente na página fica aqui.
+    A estrutura segue uma ordem lógica: cabeçalho → seções de conteúdo → rodapé.
+  -->
+
+  <!-- =============================================
+    NAVEGAÇÃO
+    Barra fixa no topo com links para as seções da página.
+    ============================================= -->
+
+  <header class="site-header">
+    <!--
+      <header>: Elemento semântico que marca o cabeçalho da página.
+      Usar tags semânticas (header, nav, main, section, footer) em vez de
+      <div> genéricos ajuda buscadores e leitores de tela a entenderem
+      a estrutura do conteúdo.
+    -->
+
+    <nav class="nav" aria-label="Navegação principal">
+      <!--
+        <nav>: Indica que este bloco contém links de navegação.
+        aria-label: descreve a navegação para leitores de tela (acessibilidade).
+      -->
+
+      <a href="#inicio" class="nav-logo">vinicius<span>.cs</span></a>
+      <!--
+        O "logo" do site — seu nome/marca. href="#inicio" leva ao topo da página.
+        A tag <span> permite estilizar a segunda parte de forma diferente no CSS.
+      -->
+
+      <ul class="nav-links" role="list">
+        <!--
+          <ul>: Lista não ordenada de links. role="list" é necessário em alguns
+          leitores de tela que ignoram listas CSS.
+        -->
+        <li><a href="#projetos">projetos</a></li>
+        <li><a href="#artigos">artigos</a></li>
+        <li><a href="#sobre">sobre</a></li>
+        <li><a href="#contato">contato</a></li>
+        <!--
+          href="#id": ancora links — ao clicar, a página rola suavemente até
+          o elemento com aquele id (definido nas seções abaixo).
+          Ative a rolagem suave no CSS com: html { scroll-behavior: smooth; }
+        -->
+      </ul>
+    </nav>
+  </header>
+
+  <!-- =============================================
+    CONTEÚDO PRINCIPAL
+    <main> informa buscadores e leitores de tela que
+    aqui está o conteúdo central da página.
+    ============================================= -->
+
+  <main>
+
+    <!-- =============================================
+      SEÇÃO HERO — primeira coisa que o visitante vê
+      ============================================= -->
+
+    <section id="inicio" class="hero">
+      <!--
+        id="inicio": identificador único usado nos links de âncora (href="#inicio").
+        Cada seção deve ter um id único para a navegação funcionar.
+      -->
+
+      <p class="hero-tag">Portfólio · Ciência & Tecnologia</p>
+      <!-- Pequena linha acima do título principal. Funciona como subtítulo de apresentação. -->
+
+      <h1 class="hero-name">
+        Vinícius Freitas<br>
+    
+      </h1>
+      <!--
+        <h1>: O título mais importante da página. Deve haver apenas UM h1 por página —
+        é o principal sinal de relevância para o Google.
+        &amp; é a forma correta de escrever o caractere & em HTML
+        (evita conflito com a sintaxe do HTML).
+      -->
+
+      <p class="hero-desc">
+        <!-- PREENCHA AQUI: Escreva 2–3 frases sobre você, seus interesses e o que você faz.
+             Ex: "Trabalho na interseção entre software e sistemas físicos complexos.
+             Apaixonado por exploração espacial e código bem feito." -->
+        Trabalho na interseção entre software, física e sistemas complexos.
+        Apaixonado por exploração espacial, código bem feito e ideias que importam.
+      </p>
+
+      <div class="hero-ctas">
+        <!--
+          CTA = Call to Action (chamada para ação).
+          São os botões principais que direcionam o visitante para ações importantes.
+        -->
+        <a href="https://github.com/ViniciusFreitasCS" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+          <!-- target="_blank": abre em nova aba. rel="noopener noreferrer": segurança — evita
+               que a nova aba acesse a janela original via JavaScript. -->
+          GitHub
+        </a>
+        <a href="https://lattes.cnpq.br/6203422873677115" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+          <!-- download: faz o navegador baixar o arquivo em vez de abrir.
+               Coloque seu PDF em assets/curriculo.pdf -->
+          Currículo Lattes
+        </a>
+      </div>
+    </section>
+
+    <!-- =============================================
+      SEÇÃO PROJETOS
+      ============================================= -->
+
+    <section id="projetos" class="section">
+      <p class="section-label"><strong>Projetos</strong></p>
+
+      <div class="projects-grid">
+        <!--
+          Grid de cards de projeto. Cada card representa um repositório do GitHub.
+          No CSS, você pode usar CSS Grid para organizar em 2 colunas:
+          display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+        -->
+
+        <!-- CARD DE PROJETO — duplique este bloco para adicionar mais projetos -->
+        <article class="project-card">
+          <!--
+            <article>: Elemento semântico para conteúdo independente e reutilizável,
+            como um card, um post, ou uma notícia. Faz sentido sozinho fora do contexto.
+          -->
+          <div class="project-header">
+            <span class="project-name">
+              <!-- PREENCHA: nome do repositório -->
+              codes
+            </span>
+            <span class="project-lang">
+              <!-- PREENCHA: linguagem principal (Python, Go, TypeScript...) -->
+              Python
+            </span>
+          </div>
+          <p class="project-desc">
+            <!-- PREENCHA: 1–2 frases descrevendo o que o projeto faz. -->
+            Ferramentas simples para cálculo de diversos problemas cotidianos.
+        
+          </p>
+          <div class="project-meta">
+            <span class="project-stat">★ 0</span>
+            <!-- PREENCHA: número de estrelas do repositório -->
+            <a href="https://github.com/ViniciusFreitasCS/codes" target="_blank" rel="noopener noreferrer" class="project-link">
+              ver no GitHub →
+            </a>
+          </div>
+        </article>
+        <!-- FIM DO CARD — copie o bloco <article> acima para adicionar mais projetos -->
+
+        <!-- Botão "ver todos" que leva para o perfil do GitHub -->
+        <a href="https://github.com/ViniciusFreitasCS" class="project-card project-card--more" target="_blank" rel="noopener noreferrer">
+          + ver todos os projetos
+        </a>
+
+      </div>
+    </section>
+
+    <!-- =============================================
+      SEÇÃO ARTIGOS
+      ============================================= -->
+
+    <section id="artigos" class="section">
+      <p class="section-label"><strong>Artigos</strong> <strong>&</strong> <strong>Publicações</strong></p>
+
+      <ol class="articles-list">
+        <!--
+          <ol>: Lista ordenada — semanticamente correta para artigos numerados.
+          Os números são gerados automaticamente pelo navegador (e customizáveis via CSS
+          com a propriedade counter-reset / counter-increment).
+        -->
+
+        <!-- ITEM DE ARTIGO — duplique este bloco para adicionar mais artigos -->
+        <li class="article-row">
+          <a href="#" class="article-title">
+            <!-- PREENCHA: título do artigo. href pode ser um link externo (Medium, Dev.to)
+                 ou uma página interna do seu site -->
+            Título do artigo ou publicação
+          </a>
+          <time datetime="2025-05-01" class="article-date">
+            <!-- datetime: formato de data legível por máquinas (YYYY-MM-DD).
+                 O texto visível pode ser qualquer formato humano. -->
+            mai 2025
+          </time>
+        </li>
+        <!-- FIM DO ITEM — copie o <li> acima para adicionar mais artigos -->
+
+      </ol>
+    </section>
+
+    <!-- =============================================
+      SEÇÃO SOBRE
+      ============================================= -->
+
+    <section id="sobre" class="section">
+      <p class="section-label"><strong>Sobre</strong></p>
+
+      <div class="about-grid">
+
+        <div class="about-sidebar">
+          <div class="about-avatar" aria-hidden="true">
+            <!-- PREENCHA: substitua "V" pelas suas iniciais, ou troque por uma
+                 imagem: <img src="assets/foto.jpg" alt="Foto de Vinicius"> -->
+            V
+          </div>
+
+          <div class="about-skills">
+            <!-- PREENCHA: adicione ou remova tags de habilidades conforme necessário -->
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Computação</span>
+            <span class="skill-tag">Tecnologia</span>
+            <span class="skill-tag">Filosofia</span>
+            <span class="skill-tag">Programação</span>
+            <span class="skill-tag">Ciência</span>
+            <!-- Duplique <span class="skill-tag">...</span> para mais skills -->
+          </div>
+        </div>
+
+        <div class="about-content">
+          <!-- PREENCHA: escreva livremente sobre você. Sugestão de estrutura:
+               - Parágrafo 1: quem você é e o que faz
+               - Parágrafo 2: o que te interessa / motiva
+               - Parágrafo 3 (opcional): fora do trabalho / hobbies -->
+          <p>Engenheiro com interesse em <strong>sistemas complexos</strong>, exploração espacial e software de alto desempenho. Baseado em Campo Grande, MS.</p>
+          <p>Gosto de construir ferramentas que conectam ciência e código — do nível de algoritmo até a interface com o usuário.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =============================================
+      SEÇÃO CONTATO
+      ============================================= -->
+
+    <section id="contato" class="section">
+      <p class="section-label"><strong>Contato</strong></p>
+
+      <p class="contact-intro">
+        <!-- PREENCHA: uma frase convidativa -->
+        Aberto a colaborações, projetos e conversas interessantes.
+      </p>
+
+      <ul class="contact-links" role="list">
+        <!-- PREENCHA: substitua os href pelos seus links reais.
+             Remova os itens de redes que você não usa. -->
+
+        <li>
+          <a href="https://github.com/ViniciusFreitasCS" target="_blank" rel="noopener noreferrer">
+            GitHub
+          </a>
+        </li>
+        <li>
+          <a href="https://linkedin.com/in/viniciusfreitas-zoo" target="_blank" rel="noopener noreferrer">
+            LinkedIn
+          </a>
+        </li>
+        <li>
+          <a href="mailto:vinidsfreitas@gmail.com">
+            <!-- mailto: abre o cliente de email do usuário com o endereço pré-preenchido -->
+            Email
+          </a>
+        </li>
+        
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- =============================================
+    RODAPÉ (FOOTER)
+    ============================================= -->
+
+  <footer class="site-footer">
+    <!--
+      <footer>: Elemento semântico para o rodapé. Geralmente contém copyright,
+      links secundários, créditos e informações de status.
+    -->
+    <span class="footer-status">
+      <span class="status-dot" aria-hidden="true"></span>
+      <!-- PREENCHA: seu status atual — "disponível para projetos", "aberto a oportunidades", etc. -->
+      
+    </span>
+    <span class="footer-copy">
+      <!-- PREENCHA: seu nome -->
+      &copy; 2026 Vinicius
+      <!--
+        &copy; é o símbolo de copyright ©.
+        Em HTML, caracteres especiais são escritos como "entidades HTML"
+        para evitar conflitos com a sintaxe da linguagem.
+      -->
+    </span>
+  </footer>
+
+</body>
+<!--
+  Boa prática: scripts JavaScript costumam ser colocados ANTES de </body>
+  (e não no <head>). Assim, o HTML é carregado e exibido antes de o JS executar,
+  tornando a página mais rápida visualmente.
+
+  Exemplo:
+  <script src="script.js"></script>
+-->
+
+</html>
